@@ -27,12 +27,10 @@
                     </select>
                 </form>
 
-
-                <div class="scrolling-pagination">
                     @for($i = 0; $i<count($softwares); $i+=2)
 
                     <div class="row">
-                            <div class="row col-md-6">
+                            <div class="row col-md-5 p-2 m-2">
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">{{$softwares[$i]->title}}</h5>
@@ -44,7 +42,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row col-md-6 ">
+                        @if(count($softwares) > 1)
+                            <div class="row col-md-5 p-2 m-2">
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">{{$softwares[$i+1]->title}}</h5>
@@ -56,28 +55,10 @@
                                     </div>
                                 </div>
                             </div>
+                        @endif
                     </div>
                     @endfor
-                    {{$softwares->links() }}
-                </div>
             </div>
-            <script>
-            </script>
-            <script type="text/javascript">
-                $('ul.pagination').hide();
-                $(function() {
-                    $('.scrolling-pagination').jscroll({
-                        autoTrigger: true,
-                        padding: 0,
-                        nextSelector: '.pagination li.active + li a',
-                        contentSelector: 'div.scrolling-pagination',
-                        callback: function() {
-                            $('ul.pagination').remove();
-                        }
-                    });
-                });
-            </script>
-            </script>
         @else
             <h3></h3>
         @endif

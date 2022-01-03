@@ -27,31 +27,65 @@
                     </select>
 
                 </form>
+                @for($i = 0; $i<count($softwares); $i+=2)
 
-                <div class="row">
-                    @foreach($softwares as $software)
-                        <div class="row row-cols-1 row-cols-md-2 g-4">
+                    <div class="row">
+                        <div class="row col-md-5 p-2 m-2">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{$software->title}}</h5>
-                                    <p class="card-text">{{$software->description}}</p>
-                                    <a href="{{$software->link}}" class="btn btn-primary">Link</a>
-                                    @if($software->user_id == \Auth::user()->id)
-                                        <a href="{{route('software.edit',['software' => $software->id] )}}" class="btn btn-success btn-xs" title="Edytuj"> Edytuj</a>
-                                        <form action="{{route('software.destroy',['software' => $software->id] )}}" method="POST">
-                                            @csrf
-                                            @method('delete')
-                                            <button class="btn btn-danger btn-xs" onclick="return confirm('Jesteś pewien?')" title="Delete" type="submit">Delete</button>
-                                        </form>
-                                    @endif
+                                    <h5 class="card-title">{{$softwares[$i]->title}}</h5>
+                                    <p class="card-text">{{$softwares[$i]->description}}</p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="container-fluid">
+                                        <div class="row text-center">
+                                            <a href="{{$softwares[$i]->link}}" class="btn btn-primary w-100 p-0 m-0">Link</a>
+                                            @if($softwares[$i]->user_id == \Auth::user()->id)
+                                                <a href="{{route('software.edit',['software' => $softwares[$i]->id] )}}" class="btn btn-success btn-xs w-100 p-0 m-0" title="Edytuj"> Edytuj</a>
+                                                <form action="{{route('software.destroy',['software' => $softwares[$i]->id] )}}" class="p-0" method="POST">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="btn btn-danger btn-xs w-100 p-0 m-0" onclick="return confirm('Jesteś pewien?')" title="Delete" type="submit">Delete</button>
+                                                </form>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="card-footer text-muted">
-                                    {{$software->created_at}}
+                                    {{$softwares[$i]->created_at}}
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-                </div>
+                        @if(count($softwares) > 1)
+                            <div class="row col-md-5 p-2 m-2">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{$softwares[$i+1]->title}}</h5>
+                                        <p class="card-text">{{$softwares[$i+1]->description}}</p>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="container-fluid">
+                                            <div class="row text-center">
+                                                <a href="{{$softwares[$i+1]->link}}" class="btn btn-primary w-100 p-0 m-0">Link</a>
+                                                @if($softwares[$i+1]->user_id == \Auth::user()->id)
+                                                    <a href="{{route('software.edit',['software' => $softwares[$i+1]->id] )}}" class="btn btn-success btn-xs w-100 p-0 m-0" title="Edytuj"> Edytuj</a>
+                                                    <form action="{{route('software.destroy',['software' => $softwares[$i+1]->id] )}}" class="p-0" method="POST">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button class="btn btn-danger btn-xs w-100 p-0 m-0" onclick="return confirm('Jesteś pewien?')" title="Delete" type="submit">Delete</button>
+                                                    </form>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer text-muted">
+                                        {{$softwares[$i+1]->created_at}}
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                @endfor
             </div>
         @else
             <h3></h3>

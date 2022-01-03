@@ -17,7 +17,7 @@ class SoftwareFactory extends Factory
     {   $icons = ['fas fa-file-archive', 'far fa-file-archive', 'fas fa-file', 'far fa-file'];
         $lic = ['apache2','GNU3','MIT','CCZ'];
         return [
-            'title' => $this->faker->title,
+            'title' => $this->faker->domainWord,
             'user_id' => 1,
             'description' => $this->faker->text(200),
             'link' => $this->faker->url,

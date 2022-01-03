@@ -14,6 +14,6 @@ class SoftwareTableSeeder extends Seeder
      */
     public function run()
     {
-        Software::factory()->count(2)->create();
+        Software::factory()->count(200)->create();
     }
 }
