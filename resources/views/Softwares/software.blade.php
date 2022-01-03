@@ -18,8 +18,10 @@
                 <form role="form" action="{{route('software.index')}}" method="get">
                     {{ csrf_field() }}
 
-                    <label class="mb-3 fs-3 align-self-center" for="licence">Licence</label>
-                    <select class="form-select-lg mb-3 align-self-center" name="licences" id="licences">
+                    <button type="submit" class="btn btn-primary" >Filter</button>
+                    <label for="licence">Licence</label>
+                    <select name="licences" id="licences">
+
                         <option value="apache2"
                             @if ($filter == 'apache2')
                                 selected
@@ -40,7 +42,13 @@
                     </select>
                     <button type="submit" class="btn btn-primary" >Filter</button>
                 </form>
-
+                @isset($filter)
+                    <form action="{{route('software.index')}}" method="GET">
+                        <button type="submit" class="btn btn-danger" name="clicked" value="delete-filter">Delete Filter</button>
+                    </form>
+                @endisset
+                
+                
                     @for($i = 0; $i<count($softwares); $i+=2)
 
                     <div class="row">
