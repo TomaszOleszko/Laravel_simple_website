@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Software;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 class SoftwareController extends Controller
 {
     /**
@@ -16,16 +17,31 @@ class SoftwareController extends Controller
     {
         $data = $request->all();
         $filter = null;
-        
+        //jeśli jest wybrana jakaś licencja   /software?licences
         if(!empty($data['licences']))
         {
             $softwares = Software::where('licence', '=', $data['licences'])->paginate(10);
-            $filter = $data['licences'];
+            Session::put('softwareFilter', $data['licences']);
+            $filter = Session::get('softwareFilter');
+            // session(['softwareFilter' => $data['licences']]);
         }
-        else
-        {   $filter = null;
-
+        //jeśli wyczyszczono filtr  /software/get?delete-filter
+        else if(!empty($data['clicked']) && $data['clicked']=='delete-filter')
+        {
+            Session::forget('softwareFilter');
+            $filter = null;
             $softwares = Software::paginate(10);
+        }
+        //   /software
+        else
+        {
+            if(Session::get('softwareFilter'))
+            {
+                $softwares = Software::where('licence', '=', Session::get('softwareFilter'))->paginate(10);
+            }
+            else{
+                $softwares = Software::paginate(10);
+            }    
         }
 
         return view('Softwares.software',[
