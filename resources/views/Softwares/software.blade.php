@@ -13,16 +13,13 @@
                 {{ session()->get('success') }}
             </div>
         @endif
-        @if (!empty($filter))
-                @dump($filter)
-            @endif
         @if (!$softwares->isEmpty())
             <div class="container">
                 <form role="form" action="{{route('software.index')}}" method="get">
                     {{ csrf_field() }}
-                    <button type="submit" class="btn btn-primary" >Filter</button>
-                    <label for="licence">Licence</label>
-                    <select name="licences" id="licences">
+
+                    <label class="mb-3 fs-3 align-self-center" for="licence">Licence</label>
+                    <select class="form-select-lg mb-3 align-self-center" name="licences" id="licences">
                         <option value="apache2"
                             @if ($filter == 'apache2')
                                 selected
@@ -41,8 +38,9 @@
                                 selected
                             @endif>Creative Commons Zero v1.0 Universal</option>
                     </select>
+                    <button type="submit" class="btn btn-primary" >Filter</button>
                 </form>
-                
+
                     @for($i = 0; $i<count($softwares); $i+=2)
 
                     <div class="row">
