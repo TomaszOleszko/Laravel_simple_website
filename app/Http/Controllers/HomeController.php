@@ -29,23 +29,16 @@ class HomeController extends Controller
         $user = auth()->user();
         $userCount = User::count();
         $softwareCount = Software::count();
-        $userSoftwaresCount = Software::where('user_id',$user['id'])->count();
-        $popularLicence = Software::select('licence')
-            ->groupBy('licence')
-            ->orderByRaw('COUNT(*) DESC')
-            ->limit(1)
-            ->get();
+        $userSoftwaresCount = $user->softwares->count();
+        $popularLicence = Software::getPopularLicense(null,1);
+
         if(empty($popularLicence[0])){
             $popularLicence['licence'] = "None";
         }else{
             $popularLicence['licence'] = $popularLicence[0]['licence'];
         }
-        $popularUser = User::find(
-            Software::select('user_id')
-            ->groupBy('user_id')
-            ->orderByRaw('COUNT(*) DESC')
-            ->limit(1)
-            ->get());
+        $popularUser = User::getPopularUser(1);
+        
         if (empty($popularUser[0])){
             $popularUser['name'] = "None";
         }else{
@@ -56,7 +49,7 @@ class HomeController extends Controller
             'softwareCount'=>$softwareCount,
             'userSoftwaresCount'=>$userSoftwaresCount,
             'popularLicence'=>$popularLicence['licence'],
-            'popularUser' =>$popularUser['name']]);
+            'popularUser' =>$popularUser[0]['name']]);
     }
 
 }

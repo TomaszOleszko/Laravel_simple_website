@@ -16,7 +16,7 @@ class User extends Authenticatable
     public function softwares(){
         return $this->hasMany(Software::class);
     }
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -46,4 +46,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function getPopularUser($limit=1)
+    {
+        $query = User::find(
+            Software::select('user_id')
+            ->groupBy('user_id')
+            ->orderByRaw('COUNT(*) DESC')
+            ->limit($limit)
+            ->get());
+        return $query;
+    }
 }
