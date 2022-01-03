@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Software;
 use App\Models\User;
 use Illuminate\Http\Request;
+use function PHPUnit\Framework\isEmpty;
 
 class HomeController extends Controller
 {
@@ -34,17 +35,27 @@ class HomeController extends Controller
             ->orderByRaw('COUNT(*) DESC')
             ->limit(1)
             ->get();
+        if(empty($popularLicence[0])){
+            $popularLicence['licence'] = "None";
+        }else{
+            $popularLicence['licence'] = $popularLicence[0]['licence'];
+        }
         $popularUser = User::find(
             Software::select('user_id')
             ->groupBy('user_id')
             ->orderByRaw('COUNT(*) DESC')
             ->limit(1)
-            ->get()[0]['user_id']);
+            ->get());
+        if (empty($popularUser[0])){
+            $popularUser['name'] = "None";
+        }else{
+            $popularUser['name'] = $popularUser[0]['user_id'];
+        }
         return view('home',['user' => $user,
             'userCount' => $userCount,
             'softwareCount'=>$softwareCount,
             'userSoftwaresCount'=>$userSoftwaresCount,
-            'popularLicence'=>$popularLicence[0]['licence'],
+            'popularLicence'=>$popularLicence['licence'],
             'popularUser' =>$popularUser['name']]);
     }
 

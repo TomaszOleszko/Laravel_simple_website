@@ -27,42 +27,34 @@
                     </select>
 
                 </form>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">created at</th>
-                        <th scope="col">updated at</th>
-                        <th scope="col">link</th>
-                        <th scope="col">Options</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+
+                    <div class="row">
                     @foreach($softwares as $software)
-                        <tr>
-                            <th scope="row">{{$software->id}}<i class="{{$software->icon}}"></i></th>
-                            <td>{{$software->title}}</td>
-                            <td>{{$software->created_at}}</td>
-                            <td>{{$software->updated_at}}</td>
-                            <td>{{$software->link}}</td>
-                            <td>{{$software->message}}
-                                <br /> @if($software->user_id == \Auth::user()->id)
-                                    <a href="{{route('software.edit',['software' => $software->id] )}}" class="btn btn-success btn-xs" title="Edytuj"> Edytuj</a>
-                                    <form action="{{route('software.destroy',['software' => $software->id] )}}" method="POST">
-                                        @csrf
-                                        @method('delete')
-                                        <button class="btn btn-danger btn-xs" onclick="return confirm('Jesteś pewien?')" title="Delete" type="submit">Delete</button>
-                                    </form>
-                                @endif
-                            </td>
-                        </tr>
+                            <div class="row row-cols-1 row-cols-md-2 g-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{$software->title}}</h5>
+                                        <p class="card-text">{{$software->description}}</p>
+                                        <a href="{{$software->link}}" class="btn btn-primary">Link</a>
+                                        @if($software->user_id == \Auth::user()->id)
+                                            <a href="{{route('software.edit',['software' => $software->id] )}}" class="btn btn-success btn-xs" title="Edytuj"> Edytuj</a>
+                                            <form action="{{route('software.destroy',['software' => $software->id] )}}" method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <button class="btn btn-danger btn-xs" onclick="return confirm('Jesteś pewien?')" title="Delete" type="submit">Delete</button>
+                                            </form>
+                                        @endif
+                                    </div>
+                                    <div class="card-footer text-muted">
+                                        {{$software->created_at}}
+                                    </div>
+                                </div>
+                            </div>
                     @endforeach
-                    </tbody>
-                </table>
+                    </div>
             </div>
         @else
-            <h3>Nic tu nie ma</h3>
+            <h3></h3>
         @endif
     @endauth
 @endsection
