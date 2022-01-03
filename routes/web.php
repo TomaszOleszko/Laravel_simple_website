@@ -19,7 +19,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/about', [App\Http\Controllers\AboutController::class, 'index']);
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::resource('/software', 'App\Http\Controllers\SoftwareController');
+    Route::get('/user-software', [App\Http\Controllers\UserController::class, 'userSoftware'])->name('userSoftwares');
+});
+
+
 Auth::routes();
-Route::get('/user-software', [App\Http\Controllers\UserController::class, 'userSoftware'])->name('userSoftwares');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('/software', 'App\Http\Controllers\SoftwareController');
+
+
