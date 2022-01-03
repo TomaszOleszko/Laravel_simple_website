@@ -58,6 +58,10 @@
                         @endif
                     </div>
                     @endfor
+                <div class="d-flex flex-wrap">
+                    {{ $softwares->links() }}
+                </div>
+
             </div>
         @else
             <h3></h3>
