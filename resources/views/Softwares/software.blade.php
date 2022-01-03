@@ -38,7 +38,7 @@
                                         <a href="{{$softwares[$i]->link}}" class="btn btn-primary">Link</a>
                                     </div>
                                     <div class="card-footer text-muted">
-                                        {{$softwares[$i]->created_at}}
+                                        {{($softwares[$i]->created_at)->format('Y-m-d')}} at {{($softwares[$i]->created_at)->format('H:i')}}
                                     </div>
                                 </div>
                             </div>
@@ -51,7 +51,7 @@
                                         <a href="{{$softwares[$i+1]->link}}" class="btn btn-primary">Link</a>
                                     </div>
                                     <div class="card-footer text-muted">
-                                        {{$softwares[$i+1]->created_at}}
+                                        {{($softwares[$i+1]->created_at)->format('Y-m-d')}} at {{($softwares[$i+1]->created_at)->format('H:i')}}
                                     </div>
                                 </div>
                             </div>

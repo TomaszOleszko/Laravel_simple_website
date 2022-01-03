@@ -13,3 +13,10 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+/resources/views/vendor/pagination/bootstrap-4.blade.php
+/resources/views/vendor/pagination/default.blade.php
+/resources/views/vendor/pagination/semantic-ui.blade.php
+/resources/views/vendor/pagination/simple-bootstrap-4.blade.php
+/resources/views/vendor/pagination/simple-default.blade.php
+/resources/views/vendor/pagination/simple-tailwind.blade.php
+/resources/views/vendor/pagination/tailwind.blade.php
