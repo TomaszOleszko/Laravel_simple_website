@@ -14,6 +14,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
+        @dump(Session::get('softwareFilter'))
         @if (!$softwares->isEmpty())
             <div class="container">
                 <div class="row">
@@ -53,6 +54,32 @@
 
 
 
+
+                        <option value="apache2"
+                            @if (Session::get('softwareFilter')== 'apache2')
+                                selected
+                            @endif
+                            >Apache License 2.0 (Apache-2.0)</option>
+                        <option value="GNU3"
+                            @if (Session::get('softwareFilter') == 'GNU3')
+                                selected
+                            @endif>GNU General Public License v3.0</option>
+                        <option value="MIT"
+                            @if (Session::get('softwareFilter') == 'MIT')
+                                selected
+                            @endif>MIT License</option>
+                        <option value="CCZ"
+                            @if (Session::get('softwareFilter') == 'CCZ')
+                                selected
+                            @endif>Creative Commons Zero v1.0 Universal</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary" >Filter</button>
+                </form>
+                @if(Session::get('softwareFilter'))
+                    <form action="{{route('software.index')}}" method="GET">
+                        <button type="submit" class="btn btn-danger" name="clicked" value="delete-filter">Delete Filter</button>
+                    </form>
+                @endif
                     @for($i = 0; $i<count($softwares); $i+=2)
 
                     <div class="row">
