@@ -36,14 +36,6 @@
                                         <h5 class="card-title">{{$software->title}}</h5>
                                         <p class="card-text">{{$software->description}}</p>
                                         <a href="{{$software->link}}" class="btn btn-primary">Link</a>
-                                        @if($software->user_id == \Auth::user()->id)
-                                            <a href="{{route('software.edit',['software' => $software->id] )}}" class="btn btn-success btn-xs" title="Edytuj"> Edytuj</a>
-                                            <form action="{{route('software.destroy',['software' => $software->id] )}}" method="POST">
-                                                @csrf
-                                                @method('delete')
-                                                <button class="btn btn-danger btn-xs" onclick="return confirm('Jesteś pewien?')" title="Delete" type="submit">Delete</button>
-                                            </form>
-                                        @endif
                                     </div>
                                     <div class="card-footer text-muted">
                                         {{$software->created_at}}
