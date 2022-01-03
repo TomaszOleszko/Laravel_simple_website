@@ -15,40 +15,43 @@
         @endif
         @if (!$softwares->isEmpty())
             <div class="container">
-                <form role="form" action="{{route('software.index')}}" method="get">
-                    {{ csrf_field() }}
+                <div class="row">
+                    <div class="col-md-6">
+                        @isset($filter)
+                            <form action="{{route('software.index')}}" class="mb-3 fs-3 align-self-center" method="GET">
+                                <button type="submit" class="btn btn-danger" name="clicked" value="delete-filter">Delete Filter</button>
+                            </form>
+                        @endisset
+                        <form role="form" action="{{route('software.index')}}" method="get">
+                            {{ csrf_field() }}
+                            <label for="licence" class="mb-3 fs-3 align-self-center">Licence</label>
+                            <select class="form-select-lg mb-3 align-self-center" name="licences" id="licences">
 
-                    <button type="submit" class="btn btn-primary" >Filter</button>
-                    <label for="licence">Licence</label>
-                    <select name="licences" id="licences">
+                                <option value="apache2"
+                                        @if ($filter == 'apache2')
+                                        selected
+                                    @endif
+                                >Apache License 2.0 (Apache-2.0)</option>
+                                <option value="GNU3"
+                                        @if ($filter == 'GNU3')
+                                        selected
+                                    @endif>GNU General Public License v3.0</option>
+                                <option value="MIT"
+                                        @if ($filter == 'MIT')
+                                        selected
+                                    @endif>MIT License</option>
+                                <option value="CCZ"
+                                        @if ($filter == 'CCZ')
+                                        selected
+                                    @endif>Creative Commons Zero v1.0 Universal</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary" >Filter</button>
+                        </form>
+                    </div>
+                </div>
 
-                        <option value="apache2"
-                            @if ($filter == 'apache2')
-                                selected
-                            @endif
-                            >Apache License 2.0 (Apache-2.0)</option>
-                        <option value="GNU3"
-                            @if ($filter == 'GNU3')
-                                selected
-                            @endif>GNU General Public License v3.0</option>
-                        <option value="MIT"
-                            @if ($filter == 'MIT')
-                                selected
-                            @endif>MIT License</option>
-                        <option value="CCZ"
-                            @if ($filter == 'CCZ')
-                                selected
-                            @endif>Creative Commons Zero v1.0 Universal</option>
-                    </select>
-                    <button type="submit" class="btn btn-primary" >Filter</button>
-                </form>
-                @isset($filter)
-                    <form action="{{route('software.index')}}" method="GET">
-                        <button type="submit" class="btn btn-danger" name="clicked" value="delete-filter">Delete Filter</button>
-                    </form>
-                @endisset
-                
-                
+
+
                     @for($i = 0; $i<count($softwares); $i+=2)
 
                     <div class="row">
@@ -56,10 +59,11 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">{{$softwares[$i]->title}}</h5>
-                                        <p class="card-text">{{ $softwares[$i]->licence }}  {{$softwares[$i]->description}}</p>
+                                        <p class="card-text">{{$softwares[$i]->description}}</p>
                                         <a href="{{$softwares[$i]->link}}" class="btn btn-primary">Link</a>
                                     </div>
                                     <div class="card-footer text-muted">
+                                        {{ $softwares[$i]->licence }}
                                         {{($softwares[$i]->created_at)->format('Y-m-d')}} at {{($softwares[$i]->created_at)->format('H:i')}}
                                     </div>
                                 </div>
@@ -73,6 +77,7 @@
                                         <a href="{{$softwares[$i+1]->link}}" class="btn btn-primary">Link</a>
                                     </div>
                                     <div class="card-footer text-muted">
+                                        {{ $softwares[$i]->licence }}
                                         {{($softwares[$i+1]->created_at)->format('Y-m-d')}} at {{($softwares[$i+1]->created_at)->format('H:i')}}
                                     </div>
                                 </div>
