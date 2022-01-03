@@ -15,20 +15,20 @@ class SoftwareController extends Controller
     public function index(Request $request)
     {
         $data = $request->all();
-        $filter = '';
-        if(!empty($data))
+        $filter = null;
+        if(!empty($data['licences']))
         {
             $softwares = Software::where('licence', '=', $data['licences'])->paginate(10);
             $filter = $data['licences'];
         }
         else
-        {
+        {   $filter = null;
             $softwares = Software::paginate(10);
         }
 
         return view('Softwares.software',[
             'softwares' => $softwares,
-            'filter' => $filter
+            'filter' => $filter,
         ]);
     }
 

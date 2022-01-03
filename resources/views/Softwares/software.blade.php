@@ -13,9 +13,6 @@
                 {{ session()->get('success') }}
             </div>
         @endif
-        @if (!empty($filter))
-                @dump($filter)
-            @endif
         @if (!$softwares->isEmpty())
             <div class="container">
                 <form role="form" action="{{route('software.index')}}" method="get">
@@ -42,6 +39,12 @@
                             @endif>Creative Commons Zero v1.0 Universal</option>
                     </select>
                 </form>
+                @isset($filter)
+                    <form action="{{route('software.index')}}" method="GET">
+                        <button type="submit" class="btn btn-danger" name="clicked" value="delete-filter">Delete Filter</button>
+                    </form>
+                @endisset
+                
                 
                     @for($i = 0; $i<count($softwares); $i+=2)
 
