@@ -13,20 +13,36 @@
                 {{ session()->get('success') }}
             </div>
         @endif
+        @if (!empty($filter))
+                @dump($filter)
+            @endif
         @if (!$softwares->isEmpty())
             <div class="container">
-                <form role="form" action="{{route('software.index')}}" method="post">
+                <form role="form" action="{{route('software.index')}}" method="get">
                     {{ csrf_field() }}
                     <button type="submit" class="btn btn-primary" >Filter</button>
                     <label for="licence">Licence</label>
                     <select name="licences" id="licences">
-                        <option value="apache2">Apache License 2.0 (Apache-2.0)</option>
-                        <option value="GNU3">GNU General Public License v3.0</option>
-                        <option value="MIT">MIT License</option>
-                        <option value="CCZ">Creative Commons Zero v1.0 Universal</option>
+                        <option value="apache2"
+                            @if ($filter == 'apache2')
+                                selected
+                            @endif
+                            >Apache License 2.0 (Apache-2.0)</option>
+                        <option value="GNU3"
+                            @if ($filter == 'GNU3')
+                                selected
+                            @endif>GNU General Public License v3.0</option>
+                        <option value="MIT"
+                            @if ($filter == 'MIT')
+                                selected
+                            @endif>MIT License</option>
+                        <option value="CCZ"
+                            @if ($filter == 'CCZ')
+                                selected
+                            @endif>Creative Commons Zero v1.0 Universal</option>
                     </select>
                 </form>
-
+                
                     @for($i = 0; $i<count($softwares); $i+=2)
 
                     <div class="row">
@@ -34,7 +50,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">{{$softwares[$i]->title}}</h5>
-                                        <p class="card-text">{{$softwares[$i]->description}}</p>
+                                        <p class="card-text">{{ $softwares[$i]->licence }}  {{$softwares[$i]->description}}</p>
                                         <a href="{{$softwares[$i]->link}}" class="btn btn-primary">Link</a>
                                     </div>
                                     <div class="card-footer text-muted">
