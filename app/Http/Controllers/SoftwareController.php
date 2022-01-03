@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSoftwareRequest;
 use Illuminate\Http\Request;
 use App\Models\Software;
 use Illuminate\Support\Facades\Auth;
@@ -68,7 +69,7 @@ class SoftwareController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public function store(StoreSoftwareRequest $request)
     {
         $data = $request->all();
         $icons = ['fas fa-file-archive', 'far fa-file-archive', 'fas fa-file', 'far fa-file'];
