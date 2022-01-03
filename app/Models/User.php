@@ -16,6 +16,7 @@ class User extends Authenticatable
     public function softwares(){
         return $this->hasMany(Software::class);
     }
+    
     /**
      * The attributes that are mass assignable.
      *
