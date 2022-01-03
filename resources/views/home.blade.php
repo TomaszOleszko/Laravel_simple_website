@@ -11,7 +11,6 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
-
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -36,7 +35,6 @@
                                     @else
                                         Member for {{date('Y')-$user->created_at->format('Y')}} years
                                     @endif
-
                                 </li>
                                 <li>
                                     Softwares added: {{$userSoftwaresCount}}
