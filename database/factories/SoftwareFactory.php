@@ -18,10 +18,11 @@ class SoftwareFactory extends Factory
         $lic = ['apache2','GNU3','MIT','CCZ'];
         return [
             'title' => $this->faker->title,
+            'user_id' => 1,
             'description' => $this->faker->text(200),
             'link' => $this->faker->url,
-            'icon' => $this->$icons[array_rand($icons,1)],
-            'licence' => $this->$lic[array_rand($lic,1)]
+            'icon' => $icons[array_rand($icons,1)],
+            'licence' => $lic[array_rand($lic,1)]
         ];
     }
 }

@@ -25,26 +25,59 @@
                         <option value="MIT">MIT License</option>
                         <option value="CCZ">Creative Commons Zero v1.0 Universal</option>
                     </select>
-
                 </form>
 
+
+                <div class="scrolling-pagination">
+                    @for($i = 0; $i<count($softwares); $i+=2)
+
                     <div class="row">
-                    @foreach($softwares as $software)
-                            <div class="row row-cols-1 row-cols-md-2 g-4">
+                            <div class="row col-md-6">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{$software->title}}</h5>
-                                        <p class="card-text">{{$software->description}}</p>
-                                        <a href="{{$software->link}}" class="btn btn-primary">Link</a>
+                                        <h5 class="card-title">{{$softwares[$i]->title}}</h5>
+                                        <p class="card-text">{{$softwares[$i]->description}}</p>
+                                        <a href="{{$softwares[$i]->link}}" class="btn btn-primary">Link</a>
                                     </div>
                                     <div class="card-footer text-muted">
-                                        {{$software->created_at}}
+                                        {{$softwares[$i]->created_at}}
                                     </div>
                                 </div>
                             </div>
-                    @endforeach
+                            <div class="row col-md-6 ">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{$softwares[$i+1]->title}}</h5>
+                                        <p class="card-text">{{$softwares[$i+1]->description}}</p>
+                                        <a href="{{$softwares[$i+1]->link}}" class="btn btn-primary">Link</a>
+                                    </div>
+                                    <div class="card-footer text-muted">
+                                        {{$softwares[$i+1]->created_at}}
+                                    </div>
+                                </div>
+                            </div>
                     </div>
+                    @endfor
+                    {{$softwares->links() }}
+                </div>
             </div>
+            <script>
+            </script>
+            <script type="text/javascript">
+                $('ul.pagination').hide();
+                $(function() {
+                    $('.scrolling-pagination').jscroll({
+                        autoTrigger: true,
+                        padding: 0,
+                        nextSelector: '.pagination li.active + li a',
+                        contentSelector: 'div.scrolling-pagination',
+                        callback: function() {
+                            $('ul.pagination').remove();
+                        }
+                    });
+                });
+            </script>
+            </script>
         @else
             <h3></h3>
         @endif
