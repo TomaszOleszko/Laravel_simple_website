@@ -18,30 +18,49 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                        <h2>Your stats:</h2>
-                        <ul>
-                            <li>
-                                Member for {{date('Y')-$user->created_at->format('Y')}} years
-                            </li>
-                            <li>
-                                Softwares added: {{$userSoftwaresCount}}
-                            </li>
-                        </ul>
-                        <h2>Overall stats:</h2>
-                        <ul>
-                            <li>
-                                Registered users: {{$userCount}}
-                            </li>
-                            <li>
-                                Number of Softwares: {{$softwareCount}}
-                            </li>
-                            <li>
-                                Most popular licence: {{$popularLicence}}
-                            </li>
-                            <li>
-                                Most active user: {{$popularUser}}
-                            </li>
-                        </ul>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2>Your stats:</h2>
+                            <ul>
+                                <li>
+                                    @if((date('Y')-$user->created_at->format('Y')) == 0)
+                                        @if(date('m')-$user->created_at->format('m') == 0)
+                                            @if(date('d')-$user->created_at->format('d') == 0)
+                                                Member from today
+                                            @else
+                                                Member for {{date('d')-$user->created_at->format('d')}} days
+                                            @endif
+                                        @else
+                                            Member for {{date('m')-$user->created_at->format('m')}} months
+                                        @endif
+                                    @else
+                                        Member for {{date('Y')-$user->created_at->format('Y')}} years
+                                    @endif
+
+                                </li>
+                                <li>
+                                    Softwares added: {{$userSoftwaresCount}}
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h2>Overall stats:</h2>
+                            <ul>
+                                <li>
+                                    Registered users: {{$userCount}}
+                                </li>
+                                <li>
+                                    Number of Software added: {{$softwareCount}}
+                                </li>
+                                <li>
+                                    Most popular licence: {{$popularLicence}}
+                                </li>
+                                <li>
+                                    Most active user: {{$popularUser}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
