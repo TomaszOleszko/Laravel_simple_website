@@ -12,11 +12,23 @@ class SoftwareController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $softwares = Software::paginate(10);
+        $data = $request->all();
+        $filter = '';
+        if(!empty($data))
+        {
+            $softwares = Software::where('licence', '=', $data['licences'])->paginate(10);
+            $filter = $data['licences'];
+        }
+        else
+        {
+            $softwares = Software::paginate(10);
+        }
+
         return view('Softwares.software',[
             'softwares' => $softwares,
+            'filter' => $filter
         ]);
     }
 
@@ -103,5 +115,10 @@ class SoftwareController extends Controller
         $deletedSoftware = Software::find($id);
         $deletedSoftware->delete();
         return redirect('/software')->with('success', 'Software removed.');
+    }
+
+    public function filterSoftware(Request $request)
+    {
+        dd($request);
     }
 }
