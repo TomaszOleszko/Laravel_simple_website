@@ -16,7 +16,7 @@ class SoftwareController extends Controller
     {
         $data = $request->all();
         $filter = null;
-]
+        
         if(!empty($data['licences']))
         {
             $softwares = Software::where('licence', '=', $data['licences'])->paginate(10);
