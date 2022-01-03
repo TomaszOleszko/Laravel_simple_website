@@ -11286,3 +11286,13 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+
+body {
+
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #9d4429;
+    background: -webkit-linear-gradient(to right, #228c8c, #4e78a6);
+    background: linear-gradient(to right, #15988c, #384b5e)
+}

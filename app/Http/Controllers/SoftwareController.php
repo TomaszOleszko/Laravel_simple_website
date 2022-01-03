@@ -14,7 +14,7 @@ class SoftwareController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -46,7 +46,7 @@ class SoftwareController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**

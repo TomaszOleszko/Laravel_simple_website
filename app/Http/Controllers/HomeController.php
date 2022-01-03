@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Software;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,27 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = auth()->user();
+        $userCount = User::count();
+        $softwareCount = Software::count();
+        $userSoftwaresCount = Software::where('user_id',$user['id'])->count();
+        $popularLicence = Software::select('licence')
+            ->groupBy('licence')
+            ->orderByRaw('COUNT(*) DESC')
+            ->limit(1)
+            ->get();
+        $popularUser = User::find(
+            Software::select('user_id')
+            ->groupBy('user_id')
+            ->orderByRaw('COUNT(*) DESC')
+            ->limit(1)
+            ->get()[0]['user_id']);
+        return view('home',['user' => $user,
+            'userCount' => $userCount,
+            'softwareCount'=>$softwareCount,
+            'userSoftwaresCount'=>$userSoftwaresCount,
+            'popularLicence'=>$popularLicence[0]['licence'],
+            'popularUser' =>$popularUser['name']]);
     }
+
 }
