@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSoftwareRequest;
+use App\Http\Requests\UpdateSoftwareRequest;
 use Illuminate\Http\Request;
 use App\Models\Software;
 use Illuminate\Support\Facades\Auth;
@@ -104,12 +105,8 @@ class SoftwareController extends Controller
      * @param  int  $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
-    public function edit($id)
+    public function edit(Software $software)
     {
-        $software = Software::find($id);
-        if($software == null || Auth::user()->id != $software->user_id){
-            return back()->with(['success' => false, 'message_type' => 'danger']);
-        }
         return view('Softwares.edit',['software'=>$software]);
     }
 
@@ -120,9 +117,11 @@ class SoftwareController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateSoftwareRequest $request, Software $software)
     {
-        //
+        $data = $request->all();
+        $software->update($data);
+        return redirect('/user-software')->with('success', 'Software updated.'); 
     }
 
     /**
@@ -131,11 +130,10 @@ class SoftwareController extends Controller
      * @param  int  $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function destroy($id)
+    public function destroy(Software $software)
     {
-        $deletedSoftware = Software::find($id);
-        $deletedSoftware->delete();
-        return redirect('/software')->with('success', 'Software removed.');
+        $software->delete();
+        return redirect('/user-software')->with('success', 'Software removed.');
     }
 
     public function filterSoftware(Request $request)
