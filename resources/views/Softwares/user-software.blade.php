@@ -13,35 +13,35 @@
                 {{ session()->get('success') }}
             </div>
         @endif
-        @if (!$softwares->isEmpty())
+        @if ($hasSoftware)
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        @if(Session::get('softwareFilter'))
-                            <form action="{{route('software.index')}}" method="GET">
+                        @if(Session::get('userSoftwareFilter'))
+                            <form action="{{route('userSoftware')}}" method="GET">
                                 <button type="submit" class="btn btn-danger" name="clicked" value="delete-filter">Delete Filter</button>
                             </form>
                         @endif
-                        <form role="form" action="{{route('software.index')}}" method="get">
+                        <form role="form" action="{{route('userSoftware')}}" method="GET">
                             {{ csrf_field() }}
                             <label for="licence" class="mb-3 fs-3 align-self-center">Licence</label>
                             <select class="form-select-lg mb-3 align-self-center" name="licences" id="licences">
 
                                 <option value="apache2"
-                                        @if (Session::get('softwareFilter')== 'apache2')
+                                        @if (Session::get('userSoftwareFilter')== 'apache2')
                                         selected
                                     @endif
                                 >Apache License 2.0 (Apache-2.0)</option>
                                 <option value="GNU3"
-                                        @if (Session::get('softwareFilter') == 'GNU3')
+                                        @if (Session::get('userSoftwareFilter') == 'GNU3')
                                         selected
                                     @endif>GNU General Public License v3.0</option>
                                 <option value="MIT"
-                                        @if (Session::get('softwareFilter') == 'MIT')
+                                        @if (Session::get('userSoftwareFilter') == 'MIT')
                                         selected
                                     @endif>MIT License</option>
                                 <option value="CCZ"
-                                        @if (Session::get('softwareFilter') == 'CCZ')
+                                        @if (Session::get('userSoftwareFilter') == 'CCZ')
                                         selected
                                     @endif>Creative Commons Zero v1.0 Universal</option>
                             </select>
@@ -49,8 +49,8 @@
                         </form>
                     </div>
                 </div>
-                @for($i = 0; $i<count($softwares); $i+=2)
-
+                @if (count($softwares))
+                    @for($i = 0; $i<count($softwares); $i+=2)
                     <div class="row">
                         <div class="row col-md-5 p-2 m-2">
                             <div class="card">
@@ -108,10 +108,14 @@
                             </div>
                         @endif
                     </div>
-                @endfor
+                    @endfor
+                @else
+                    Nie masz żadnego software'u z kryterium {{ Session::get('userSoftwareFilter') }}
+                @endif
+                 
             </div>
         @else
-            <h3></h3>
+            <h3>Tou havn't any software :(</h3>
         @endif
     @endauth
 @endsection
