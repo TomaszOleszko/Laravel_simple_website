@@ -15,18 +15,40 @@
         @endif
         @if (!$softwares->isEmpty())
             <div class="container">
-                <form role="form" action="{{route('software.index')}}" method="post">
-                    {{ csrf_field() }}
-                    <button type="submit" class="btn btn-primary" >Filter</button>
-                    <label for="licence">Licence</label>
-                    <select name="licences" id="licences">
-                        <option value="apache2">Apache License 2.0 (Apache-2.0)</option>
-                        <option value="GNU3">GNU General Public License v3.0</option>
-                        <option value="MIT">MIT License</option>
-                        <option value="CCZ">Creative Commons Zero v1.0 Universal</option>
-                    </select>
+                <div class="row">
+                    <div class="col-md-6">
+                        @if(Session::get('softwareFilter'))
+                            <form action="{{route('software.index')}}" method="GET">
+                                <button type="submit" class="btn btn-danger" name="clicked" value="delete-filter">Delete Filter</button>
+                            </form>
+                        @endif
+                        <form role="form" action="{{route('software.index')}}" method="get">
+                            {{ csrf_field() }}
+                            <label for="licence" class="mb-3 fs-3 align-self-center">Licence</label>
+                            <select class="form-select-lg mb-3 align-self-center" name="licences" id="licences">
 
-                </form>
+                                <option value="apache2"
+                                        @if (Session::get('softwareFilter')== 'apache2')
+                                        selected
+                                    @endif
+                                >Apache License 2.0 (Apache-2.0)</option>
+                                <option value="GNU3"
+                                        @if (Session::get('softwareFilter') == 'GNU3')
+                                        selected
+                                    @endif>GNU General Public License v3.0</option>
+                                <option value="MIT"
+                                        @if (Session::get('softwareFilter') == 'MIT')
+                                        selected
+                                    @endif>MIT License</option>
+                                <option value="CCZ"
+                                        @if (Session::get('softwareFilter') == 'CCZ')
+                                        selected
+                                    @endif>Creative Commons Zero v1.0 Universal</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary" >Filter</button>
+                        </form>
+                    </div>
+                </div>
                 @for($i = 0; $i<count($softwares); $i+=2)
 
                     <div class="row">
@@ -56,7 +78,8 @@
                                 </div>
                             </div>
                         </div>
-                        @if(count($softwares) > 1)
+
+                        @if(count($softwares) > 1 && !empty($softwares[$i+1]))
                             <div class="row col-md-5 p-2 m-2">
                                 <div class="card">
                                     <div class="card-body">
