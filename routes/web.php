@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/user-software', [App\Http\Controllers\UserController::class, 'userSoftware'])->name('userSoftwares');
     Route::get('/user/{user}', [App\Http\Controllers\UserController::class, 'show'])->name('user.show');
     Route::get('/user/{user}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('user.edit');
+    Route::match(['put', 'patch'], '/user/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('user.update');
 });
 
 Auth::routes();
