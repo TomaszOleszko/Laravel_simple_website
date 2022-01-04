@@ -43,7 +43,7 @@ class SoftwareController extends Controller
             }
             else{
                 $softwares = Software::paginate(10);
-            }    
+            }
         }
 
         return view('Softwares.software',[
@@ -120,7 +120,7 @@ class SoftwareController extends Controller
     {
         $data = $request->all();
         $software->update($data);
-        return redirect('/user-software')->with('success', 'Software updated.'); 
+        return redirect('/user-software')->with('success', 'Software updated.');
     }
 
     /**

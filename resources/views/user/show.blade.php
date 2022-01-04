@@ -1,18 +1,83 @@
 @extends('layouts.app')
 @section('title',"My Software")
 @section('nav')
-    <a class="nav-link px-2 text-white" id="b1" href="{{ route('home') }}">Home <i class="far fa-folder"></i></a>
-    <a class="nav-link px-2 text-white" id="b3" href="/software">Software <i class="far fa-folder"></i></a>
-    <a class="nav-link px-2 text-white" id="b4" href="/about">About <i class="far fa-folder"></i></a>
+    <a class="nav-link px-2 text-white" id="b1" href="{{ route('home') }}">Home</a>
+    <a class="nav-link px-2 text-white" id="b3" href="{{route('software.index')}}">Software</a>
+    <a class="nav-link px-2 text-white" id="b4" href="{{route('about')}}">About</a>
 @endsection
 
 @section('content')
     @isset($user)
-    <svg height="130" width="500" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380.34 380.34"><defs><style>.cls-1{fill:#666766;}.cls-2{fill:#fff;}.cls-3,.cls-4{fill:none;stroke-miterlimit:10;}.cls-3{stroke:#6c6c6c;}.cls-4{stroke:#fff;}</style></defs><title>icon_user_whiteongrey</title><circle class="cls-1" cx="190.17" cy="190.17" r="190.17"/><polygon class="cls-2" points="101.53 236.8 101.53 336.28 278.81 336.28 278.81 236.8 256.75 229.79 251.13 210.75 192.72 269.59 128.7 210.75 123.51 228.49 101.53 236.8"/><ellipse class="cls-2" cx="189.48" cy="129.46" rx="80.18" ry="97.25"/><path class="cls-3" d="M277.65,119.63" transform="translate(-9.56 -9.38)"/><path class="cls-3" d="M254.56,123" transform="translate(-9.56 -9.38)"/><path class="cls-4" d="M277.65,119.63" transform="translate(-9.56 -9.38)"/><path class="cls-4" d="M124.89,101.8" transform="translate(-9.56 -9.38)"/></svg>
-        <h1>{{ $user->name }}</h1> <a  style="color: black" href="{{ route('user.edit', ['user' => $user]) }}">Edit</a>
-        <h3>{{ $user->email }}</h3>
-        <p>You have <a href="{{ route('userSoftware') }}" style="color: black">{{ count($software) }} software</a>. 
-        <br><br>
-        Your position in ranking is: {{ $positionInRanking }}</p>
+
+        <section class="vh-80">
+            <div class="container py-5 h-75">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col col-md-9 col-lg-7 col-xl-5">
+                        <div class="card" style="border-radius: 15px;">
+                            <div class="card-body p-4">
+                                <div class="d-flex text-black">
+
+                                    <div class="flex-grow-1 ms-3">
+                                        <h5 class="mb-1">{{$user->name}}</h5>
+                                        <p class="mb-2 pb-1" style="color: #2b2a2a;">{{$user->email}}</p>
+                                        <div class="d-flex justify-content-start rounded-3 p-2 mb-2" style="background-color: #efefef;">
+                                            <div class="px-3">
+                                                <p class="small text-muted mb-1">Software</p>
+                                                <p class="mb-0">{{ count($software) }}</p>
+                                            </div>
+                                            <div class="px-3">
+                                                <p class="small text-muted mb-1">Ranking</p>
+                                                <p class="mb-0"> @if(is_null($positionInRanking)) Last @else {{$positionInRanking}} @endif</p>
+                                            </div>
+                                            <div class="px-3">
+                                                <p class="small text-muted mb-1">Rating</p>
+                                                <p class="mb-0"> @if(is_null($positionInRanking)) 0.0 @else {{$positionInRanking/count($software)}} @endif</p>
+                                            </div>
+                                            <div class="px-3">
+                                                <p class="small text-muted mb-1">Created at</p>
+                                                <p class="mb-0"> @if((date('Y')-$user->created_at->format('Y')) == 0)
+                                                        @if(date('m')-$user->created_at->format('m') == 0)
+                                                            @if(date('d')-$user->created_at->format('d') == 0)
+                                                                Just now
+                                                            @else
+                                                                {{date('d')-$user->created_at->format('d')}} days ago
+                                                            @endif
+                                                        @else
+                                                            {{date('m')-$user->created_at->format('m')}} months ago
+                                                        @endif
+                                                    @else
+                                                        {{date('Y')-$user->created_at->format('Y')}} years ago
+                                                    @endif </p>
+                                            </div>
+                                            <div class="px-3">
+                                                <p class="small text-muted mb-1">Updated at</p>
+                                                <p class="mb-0"> @if((date('Y')-$user->updated_at->format('Y')) == 0)
+                                                        @if(date('m')-$user->updated_at->format('m') == 0)
+                                                            @if(date('d')-$user->updated_at->format('d') == 0)
+                                                                Just now
+                                                            @else
+                                                                {{date('d')-$user->updated_at->format('d')}} days ago
+                                                            @endif
+                                                        @else
+                                                            {{date('m')-$user->updated_at->format('m')}} months ago
+                                                        @endif
+                                                    @else
+                                                        {{date('Y')-$user->updated_at->format('Y')}} years ago
+                                                    @endif </p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex pt-1">
+                                            <button class="btn btn-outline-dark me-1 flex-grow-1" data-mdb-ripple-color="dark" style="z-index: 1;">
+                                                <a  style="color: black" href="{{ route('user.edit', ['user' => $user]) }}">Edit</a>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     @endisset
 @endsection
