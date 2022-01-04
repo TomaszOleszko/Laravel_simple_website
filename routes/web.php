@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/about', [App\Http\Controllers\AboutController::class, 'index']);
+    Route::get('/about', [App\Http\Controllers\AboutController::class, 'index'])->name('about');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('/software', 'App\Http\Controllers\SoftwareController');
     Route::get('/user-software', [App\Http\Controllers\UserController::class, 'userSoftware'])->name('userSoftwares');
@@ -30,5 +30,3 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Auth::routes();
-
-

@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('title','Home')
 @section('nav')
-            <a class="nav-link px-2 text-secondary disabled" id="b1" href="{{ route('home') }}">Home <i class="far fa-folder"></i></a>
-            <a class="nav-link px-2 text-white" id="b3" href="{{route('software.index')}}">Software <i class="far fa-folder"></i></a>
-            <a class="nav-link px-2 text-white" id="b4" href="/about">About <i class="far fa-folder"></i></a>
+            <a class="nav-link px-2 text-secondary disabled" id="b1" href="{{ route('home') }}">Home</a>
+            <a class="nav-link px-2 text-white" id="b3" href="{{route('software.index')}}">Software</a>
+            <a class="nav-link px-2 text-white" id="b4" href="{{route('about')}}">About</a>
 @endsection
 @section('content')
 <div class="container">
