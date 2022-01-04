@@ -57,4 +57,14 @@ class User extends Authenticatable
             ->get());
         return $query;
     }
+    public static function getYourPosition($idUser)
+    {
+        $position = null;
+        $allUsers = User::getPopularUser(null);
+
+        for ($i=0; $i < count($allUsers) ; $i++) { 
+            if($allUsers[$i]->id == $idUser) $position = $i+1;//+1 bo pierwszą pozycją jest 0
+        }
+        return $position;        
+    }
 }
