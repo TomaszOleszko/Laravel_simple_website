@@ -8,6 +8,7 @@
 
 @section('content')
     @isset($user)
+
         <section class="vh-80">
             <div class="container py-5 h-75">
                 <div class="row d-flex justify-content-center align-items-center h-100">
