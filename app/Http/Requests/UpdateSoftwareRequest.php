@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreSoftwareRequest extends FormRequest
+class UpdateSoftwareRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,8 @@ class StoreSoftwareRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $software = $this->route('software');
+        return $software->user_id == $this->user()->id;
     }
 
     /**
