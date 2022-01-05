@@ -19,7 +19,7 @@ abstract class BaseRepository implements RepositoryInterface{
         return $this->model->get($columns);
     }
 
-    public function create(array $data, $id)
+    public function create(array $data)
     {
         return $this->model->create($data);
     }
@@ -37,5 +37,10 @@ abstract class BaseRepository implements RepositoryInterface{
     {
         return $this->model->find($id, $columns);
     }
+
+    public function paginate($perPage = 10, $columns = ['*'])
+	{
+		return $this->model->paginate($perPage, $columns);
+	}
 }
 ?>
