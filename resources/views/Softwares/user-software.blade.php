@@ -9,8 +9,10 @@
 @section('content')
     @auth
         @if(session()->get('success'))
-            <div class="alert alert-success">
-                {{ session()->get('success') }}
+            <div class="w-100 container d-flex align-items-center justify-content-center">
+                <div class="alert alert-success ">
+                    {{ session()->get('success') }}
+                </div>
             </div>
         @endif
         @if ($hasSoftware)
@@ -19,14 +21,17 @@
                     <div class="col-md-6">
                         @if(Session::get('userSoftwareFilter'))
                             <form action="{{route('userSoftware')}}" method="GET">
-                                <button type="submit" class="btn btn-danger" name="clicked" value="delete-filter">Delete Filter</button>
+                                <div class="d-grid gap-2 col-6 mx-auto float-start">
+                                    <button type="submit" class="btn btn-danger" name="clicked" value="delete-filter">Delete Filter</button>
+                                </div>
                             </form>
                         @endif
                         <form role="form" action="{{route('userSoftware')}}" method="GET">
                             {{ csrf_field() }}
-                            <label for="licence" class="mb-3 fs-3 align-self-center">Licence</label>
+                            <div class="d-grid gap-2 col-6 mx-auto float-start">
+                                <button type="submit" class="btn btn-primary" >Filter</button>
+                            </div>
                             <select class="form-select-lg mb-3 align-self-center" name="licences" id="licences">
-
                                 <option value="apache2"
                                         @if (Session::get('userSoftwareFilter')== 'apache2')
                                         selected
@@ -45,7 +50,7 @@
                                         selected
                                     @endif>Creative Commons Zero v1.0 Universal</option>
                             </select>
-                            <button type="submit" class="btn btn-primary" >Filter</button>
+                            <label for="licence" class="mb-3 fs-3 align-self-center">Licence</label>
                         </form>
                     </div>
                 </div>
@@ -110,12 +115,12 @@
                     </div>
                     @endfor
                 @else
-                    Nie masz żadnego software'u z kryterium {{ Session::get('userSoftwareFilter') }}
+                    <h2>Nie masz żadnego software'u z kryterium {{ Session::get('userSoftwareFilter') }}</h2>
                 @endif
-                 
+
             </div>
         @else
-            <h3>Tou havn't any software :(</h3>
+            <h3>You don't have any software</h3>
         @endif
     @endauth
 @endsection

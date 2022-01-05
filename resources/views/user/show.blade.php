@@ -16,29 +16,28 @@
                         <div class="card" style="border-radius: 15px;">
                             <div class="card-body p-4">
                                 <div class="d-flex text-black">
-
                                     <div class="flex-grow-1 ms-3">
                                         <h5 class="mb-1">{{$user->name}}</h5>
                                         <p class="mb-2 pb-1" style="color: #2b2a2a;">{{$user->email}}</p>
                                         <div class="d-flex justify-content-start rounded-3 p-2 mb-2" style="background-color: #efefef;">
-                                            <div class="px-3">
+                                            <div class="px-2">
                                                 <p class="small text-muted mb-1">Software</p>
                                                 <p class="mb-0">{{ count($software) }}</p>
                                             </div>
-                                            <div class="px-3">
+                                            <div class="px-2">
                                                 <p class="small text-muted mb-1">Ranking</p>
                                                 <p class="mb-0"> @if(is_null($positionInRanking)) Last @else {{$positionInRanking}} @endif</p>
                                             </div>
-                                            <div class="px-3">
+                                            <div class="px-2">
                                                 <p class="small text-muted mb-1">Rating</p>
-                                                <p class="mb-0"> @if(is_null($positionInRanking)) 0.0 @else {{$positionInRanking/count($software)}} @endif</p>
+                                                <p class="mb-0"> @if(is_null($positionInRanking)) 0.0 @else {{number_format(count($software)/$positionInRanking,2)}} @endif</p>
                                             </div>
-                                            <div class="px-3">
-                                                <p class="small text-muted mb-1">Created at</p>
+                                            <div class="px-2">
+                                                <p class="small text-muted mb-1">Created</p>
                                                 <p class="mb-0"> @if((date('Y')-$user->created_at->format('Y')) == 0)
                                                         @if(date('m')-$user->created_at->format('m') == 0)
                                                             @if(date('d')-$user->created_at->format('d') == 0)
-                                                                Just now
+                                                                Today
                                                             @else
                                                                 {{date('d')-$user->created_at->format('d')}} days ago
                                                             @endif
@@ -50,11 +49,11 @@
                                                     @endif </p>
                                             </div>
                                             <div class="px-3">
-                                                <p class="small text-muted mb-1">Updated at</p>
+                                                <p class="small text-muted mb-1">Updated</p>
                                                 <p class="mb-0"> @if((date('Y')-$user->updated_at->format('Y')) == 0)
                                                         @if(date('m')-$user->updated_at->format('m') == 0)
                                                             @if(date('d')-$user->updated_at->format('d') == 0)
-                                                                Just now
+                                                                Today
                                                             @else
                                                                 {{date('d')-$user->updated_at->format('d')}} days ago
                                                             @endif
@@ -67,9 +66,7 @@
                                             </div>
                                         </div>
                                         <div class="d-flex pt-1">
-                                            <button class="btn btn-outline-dark me-1 flex-grow-1" data-mdb-ripple-color="dark" style="z-index: 1;">
-                                                <a  style="color: black" href="{{ route('user.edit', ['user' => $user]) }}">Edit</a>
-                                            </button>
+                                                <a class="btn btn-outline-dark me-1 flex-grow-1" style="color: darkred" href="{{ route('user.edit', ['user' => $user]) }}">Edit</a>
                                         </div>
                                     </div>
                                 </div>
