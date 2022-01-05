@@ -6,10 +6,20 @@ use App\Http\Requests\StoreSoftwareRequest;
 use App\Http\Requests\UpdateSoftwareRequest;
 use Illuminate\Http\Request;
 use App\Models\Software;
+use App\Services\SoftwareService;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 class SoftwareController extends Controller
 {
+    
+    /**
+     * @var softwareService
+     */
+    protected $softwareService;
+
+    public function __construct(SoftwareService $softwareService)
+    {
+        $this->softwareService = $softwareService;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,38 +27,10 @@ class SoftwareController extends Controller
      */
     public function index(Request $request)
     {
-        $data = $request->all();
-        $filter = null;
-        //jeśli jest wybrana jakaś licencja   /software?licences
-        if(!empty($data['licences']))
-        {
-            $softwares = Software::where('licence', '=', $data['licences'])->paginate(10);
-            Session::put('softwareFilter', $data['licences']);
-            $filter = Session::get('softwareFilter');
-            // session(['softwareFilter' => $data['licences']]);
-        }
-        //jeśli wyczyszczono filtr  /software/get?delete-filter
-        else if(!empty($data['clicked']) && $data['clicked']=='delete-filter')
-        {
-            Session::forget('softwareFilter');
-            $filter = null;
-            $softwares = Software::paginate(10);
-        }
-        //   /software
-        else
-        {
-            if(Session::get('softwareFilter'))
-            {
-                $softwares = Software::where('licence', '=', Session::get('softwareFilter'))->paginate(10);
-            }
-            else{
-                $softwares = Software::paginate(10);
-            }
-        }
+        $softwares = $this->softwareService->getSoftware($request->all());
 
         return view('Softwares.software',[
             'softwares' => $softwares,
-            'filter' => $filter,
 
         ]);
     }
@@ -71,20 +53,17 @@ class SoftwareController extends Controller
      */
     public function store(StoreSoftwareRequest $request)
     {
-        $data = $request->all();
-        $icons = ['fas fa-file-archive', 'far fa-file-archive', 'fas fa-file', 'far fa-file'];
+        $data = $request->only([
+            'title',
+            'description',
+            'link',
+            'licence',
+        ]);
 
-        $software = new Software();
-        $software->user_id = auth()->user()->id;
-        $software->title = $data['title'];
-        $software->description = $data['description'];
-        $software->link = $data['link'];
-        $software->icon = $icons[array_rand($icons,1)];
-        $software->licence = $data['licence'];
-        if($software->save()){
-            return redirect('/software')->with('success', 'Software saved.');
-        }
-        return view('/software');
+        $software = $this->softwareService->saveSoftwareData($data);
+
+        return redirect('/software')->with('success', 'Software saved.');
+        
     }
 
     /**
@@ -116,10 +95,15 @@ class SoftwareController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSoftwareRequest $request, Software $software)
+    public function update(UpdateSoftwareRequest $request, $id)
     {
-        $data = $request->all();
-        $software->update($data);
+        $data = $request->only([
+            'title',
+            'description',
+            'link',
+            'licence',
+        ]);
+        $software = $this->softwareService->updateSoftwareData($data, $id);
         return redirect('/user-software')->with('success', 'Software updated.');
     }
 
@@ -129,14 +113,9 @@ class SoftwareController extends Controller
      * @param  int  $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function destroy(Software $software)
+    public function destroy($id)
     {
-        $software->delete();
+        $software = $this->softwareService->deleteById($id);
         return redirect('/user-software')->with('success', 'Software removed.');
-    }
-
-    public function filterSoftware(Request $request)
-    {
-        dd($request);
     }
 }
