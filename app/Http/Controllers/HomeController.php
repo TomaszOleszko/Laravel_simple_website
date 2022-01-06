@@ -4,18 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Software;
 use App\Models\User;
+use App\Repositories\SoftwareRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use function PHPUnit\Framework\isEmpty;
 
 class HomeController extends Controller
 {
+    protected $userRepository;
+    protected $softwareRepository;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserRepository $userRepository, SoftwareRepository $softwareRepository)
     {
+        $this->userRepository = $userRepository;
+        $this->softwareRepository = $softwareRepository;
         $this->middleware('auth');
     }
 
@@ -27,9 +33,10 @@ class HomeController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $userCount = User::count();
-        $softwareCount = Software::count();
-        $userSoftwaresCount = $user->softwares->count();
+        $userCount = $this->userRepository->userCount();
+        $userSoftwaresCount = $this->userRepository->countMySoftware();
+        $softwareCount = $this->softwareRepository->countSoftware();
+
         $popularLicence = Software::getPopularLicense(null,1);
 
         if(empty($popularLicence[0])){

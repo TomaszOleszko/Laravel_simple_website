@@ -5,52 +5,32 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Repositories\UserRepository;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
+    protected $userRepository;
+    protected $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
     public function userSoftware(Request $request)
     {
-        $user = User::findOrFail(auth()->user()->id);
-        $software = $user->softwares;
-        if(count($software)) $hasSoftware = true;
-        else $hasSoftware = false;
-        $data = $request->all();
-        $filter = null;
-        //jeśli jest wybrana jakaś licencja   /software?licences
-        if(!empty($data['licences']))
-        {
-            $software = $user->softwares()->where('licence', '=', $data['licences'])->paginate(10);
-            Session::put('userSoftwareFilter', $data['licences']);
-            $filter = Session::get('userSoftwareFilter');
-            // session(['softwareFilter' => $data['licences']]);
-        }
-        //jeśli wyczyszczono filtr  /software/get?delete-filter
-        else if(!empty($data['clicked']) && $data['clicked']=='delete-filter')
-        {
-            Session::forget('userSoftwareFilter');
-            $filter = null;
-            $software = $user->softwares()->paginate(10);
-        }
-        //   /software
-        else
-        {
-            if(Session::get('userSoftwareFilter'))
-            {
-                $software = $user->softwares()->where('licence', '=', Session::get('userSoftwareFilter'))->paginate(10);
-            }
-            else{
-                $software = $user->softwares()->paginate(10);
-            }    
-        }
-
+        $software = $this->userService->getMySoftware($request->all());
+        $hasSoftware = $this->userService->hasSoftware($software);
+ 
         return view('Softwares.user-software', [ 
             'softwares' => $software, 
             'hasSoftware' => $hasSoftware,
         ]);
     }
 
-    public function show(User $user){
+    public function show($id){
+        $user = $this->userService->getUser($id);
         $software = $user->softwares;
         $positionInRanking = User::getYourPosition($user->id);
         return view('user.show', [
@@ -60,17 +40,23 @@ class UserController extends Controller
         ]);
     }
 
-    public function edit(User $user)
+    public function edit($id)
     {
+        $user = $this->userService->getUser($id);
         return view('user.edit',[
             'user' => $user,
         ]);
     }
 
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, $id)
     {
-        $data = $request->all();
-        $user->update($data);
+        $data = $request->only([
+            'name',
+            'email'
+        ]);
+        $this->userService->updateUserProfile($data, $id);
+        $user = $this->userService->getUser($id);
+        
         return redirect('/user/'.$user->id);
     }
 }
