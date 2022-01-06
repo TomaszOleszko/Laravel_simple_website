@@ -5,13 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Repositories\UserRepository;
 use App\Services\UserService;
 use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
-    protected $userRepository;
     protected $userService;
 
     public function __construct(UserService $userService)
