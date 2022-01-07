@@ -21,14 +21,13 @@ class UserService
     public function getUser($id)
     {
         $user = $this->userRepository->find($id);
-        
+
         return $user;
     }
 
     public function hasSoftware($software)
     {
-        (count($software)) ? $hasSoftware=true : $hasSoftware=false;
-        return $hasSoftware;
+        return (count($software)) ? true : false;
     }
 
     public function getMySoftware($data)
@@ -38,24 +37,24 @@ class UserService
         if(!empty($data['licences']))
         {
             Session::put('userSoftwareFilter', $data['licences']);
-            $software = $this->userRepository->getMySoftwareByLicence(Session::get('softwareFilter'), 10);
+            $software = $this->userRepository->getMySoftwareByLicence(Session::get('userSoftwareFilter'), 10);
         }
         //jeśli wyczyszczono filtr  /software/get?delete-filter
         else if(!empty($data['clicked']) && $data['clicked']=='delete-filter')
         {
             Session::forget('userSoftwareFilter');
-            $software = $this->userRepository->getMySoftwareByLicence(Session::get('softwareFilter'), 10);
+            $software = $this->userRepository->getMySoftwareByLicence(Session::get('userSoftwareFilter'), 10);
         }
         //   /software
         else
         {
             if(Session::get('userSoftwareFilter'))
             {
-                $software = $this->userRepository->getMySoftwareByLicence(Session::get('softwareFilter'), 10);
+                $software = $this->userRepository->getMySoftwareByLicence(Session::get('userSoftwareFilter'), 10);
             }
             else{
-                $software = $this->userRepository->getMySoftwareByLicence(Session::get('softwareFilter'), 10);
-            }    
+                $software = $this->userRepository->getMySoftwareByLicence(Session::get('userSoftwareFilter'), 10);
+            }
         }
 
         return $software;
@@ -65,7 +64,7 @@ class UserService
     {
         DB::beginTransaction();
         try{
-            $user = $this->userRepository->update($data, $id); 
+            $user = $this->userRepository->update($data, $id);
         }
         catch(Exception $e)
         {

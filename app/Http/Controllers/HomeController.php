@@ -36,27 +36,20 @@ class HomeController extends Controller
         $userCount = $this->userRepository->userCount();
         $userSoftwaresCount = $this->userRepository->countMySoftware();
         $softwareCount = $this->softwareRepository->countSoftware();
-
         $popularLicence = Software::getPopularLicense(null,1);
-
-        if(empty($popularLicence[0])){
-            $popularLicence['licence'] = "None";
-        }else{
-            $popularLicence['licence'] = $popularLicence[0]['licence'];
-        }
+        $popularLicence = isset($popularLicence[0]) ? $popularLicence[0]['licence'] : "None";
         $popularUser = User::getPopularUser(1);
-        
-        if (empty($popularUser[0])){
-            $popularUser['name'] = "None";
-        }else{
-            $popularUser['name'] = $popularUser[0]['user_id'];
-        }
+        $popularUser = isset($popularUser[0]) ? $popularUser[0]['name'] : "None";
+
+            //dd($popularUser[0]['name']);
+            //$popularUser['name'] = $popularUser[0]['user_id'];
+
         return view('home',['user' => $user,
             'userCount' => $userCount,
             'softwareCount'=>$softwareCount,
             'userSoftwaresCount'=>$userSoftwaresCount,
-            'popularLicence'=>$popularLicence['licence'],
-            'popularUser' =>$popularUser[0]['name']]);
+            'popularLicence'=>$popularLicence,
+            'popularUser' =>$popularUser]);
     }
 
 }
