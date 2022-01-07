@@ -15,9 +15,9 @@
                 </div>
             </div>
         @endif
-        @if ($hasSoftware)
+
             <div class="container">
-                <div class="row">
+                <div class="row d-flex justify-content-center">
                     <div class="col-md-6">
                         @if(Session::get('userSoftwareFilter'))
                             <form action="{{route('userSoftware')}}" method="GET">
@@ -54,10 +54,11 @@
                         </form>
                     </div>
                 </div>
+            @if ($hasSoftware)
                 @if (count($softwares))
                     @for($i = 0; $i<count($softwares); $i+=2)
-                    <div class="row">
-                        <div class="row col-md-5 p-2 m-2">
+                    <div class="row d-flex justify-content-center">
+                        <div class="row col-md-5 p-2 m-2 ">
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title">{{$softwares[$i]->title}}</h5>
@@ -115,12 +116,13 @@
                     </div>
                     @endfor
                 @else
-                    <h2>Nie masz żadnego software'u z kryterium {{ Session::get('userSoftwareFilter') }}</h2>
+                    <h2> {{ Session::get('userSoftwareFilter') }}</h2>
                 @endif
-
             </div>
         @else
-            <h3>You don't have any software</h3>
+        <div>
+            <h2 class="d-flex justify-content-center align-items-center" >You dont have any software</h2>
+        </div>
         @endif
     @endauth
 @endsection

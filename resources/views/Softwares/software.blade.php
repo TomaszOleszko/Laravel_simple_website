@@ -15,11 +15,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </div>
-
         @endif
-        @if (!$softwares->isEmpty())
+
             <div class="container">
-                <div class="row">
+                <div class="row d-flex justify-content-center">
                     <div class="col-md-6">
                         @if(Session::get('softwareFilter'))
                                 <form action="{{route('software.index')}}" method="GET">
@@ -58,9 +57,10 @@
                         </form>
                     </div>
                 </div>
+                @if (!$softwares->isEmpty())
                     @for($i = 0; $i<count($softwares); $i+=2)
 
-                    <div class="row">
+                    <div class="row d-flex justify-content-center">
                             <div class="row col-md-5 p-2 m-2">
                                 <div class="card">
                                     <div class="card-body">
@@ -96,8 +96,9 @@
                 </div>
             </div>
         @else
-         <!--   <h2>Nie masz żadnego software'u z kryterium {{ Session::get('userSoftwareFilter') }}</h2> -->
-            <h2>You don't have any software</h2>
+            <div>
+                <h2 class="d-flex justify-content-center align-items-center" >There are no Software added</h2>
+            </div>
         @endif
     @endauth
 @endsection

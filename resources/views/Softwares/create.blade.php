@@ -29,15 +29,15 @@
 
                             <div class="col-md-6 mb-3 mt-3">
                                 <label for="title" class="form-label">Title</label>
-                                <input type="text" class="form-control" id="title" placeholder="Enter Title" name="title" required>
+                                <input type="text" class="form-control" id="title" value="{{ old('title') }}" placeholder="Enter Title" name="title" required>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="link" class="form-label">Link:</label>
-                                <input type="url" class="form-control" id="link" placeholder="Enter url" name="link" required>
+                                <input type="url" class="form-control" id="link" value="{{ old('link') }}"  placeholder="Enter url" name="link" required>
                             </div>
                             <div class="mb-3">
-                                <label for="description">Description:</label>
-                                <textarea class="form-control" rows="5" id="desc" name="description" required></textarea>
+                                <label for="desc">Description:</label>
+                                <textarea class="form-control" rows="5" id="desc" name="description" required>{{ old('description') }}</textarea>
                             </div>
 
                             <div class="mb-3">
