@@ -10,13 +10,13 @@ use App\Services\SoftwareService;
 use Illuminate\Support\Facades\Auth;
 class SoftwareController extends Controller
 {
-    
+
     /**
      * @var softwareService
      */
     protected $softwareService;
 
-    public function __construct(SoftwareService $softwareService)
+    public function __construct(SoftwareService $softwareService) //dependency injection
     {
         $this->softwareService = $softwareService;
     }
@@ -63,7 +63,7 @@ class SoftwareController extends Controller
         $software = $this->softwareService->saveSoftwareData($data);
 
         return redirect('/software')->with('success', 'Software saved.');
-        
+
     }
 
     /**
@@ -93,7 +93,7 @@ class SoftwareController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function update(UpdateSoftwareRequest $request, $id)
     {

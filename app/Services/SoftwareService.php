@@ -12,7 +12,7 @@ use InvalidArgumentException;
 use PharIo\Manifest\InvalidApplicationNameException;
 
 class SoftwareService
-{    
+{
     /**
      * softwareRepository
      *
@@ -20,7 +20,7 @@ class SoftwareService
      */
     protected $softwareRepository;
     protected $userRepository;
-    
+
     /**
      * SoftwareService contructor
      *
@@ -29,7 +29,7 @@ class SoftwareService
      */
     public function __construct(SoftwareRepository $softwareRepository, UserRepository $userRepository)
     {
-        $this->softwareRepository = $softwareRepository;   
+        $this->softwareRepository = $softwareRepository;
         $this->userRepository = $userRepository;
     }
 
@@ -68,15 +68,15 @@ class SoftwareService
 
         $data['icon'] =  $icons[array_rand($icons,1)];
         $user = $this->userRepository->find(auth()->user()->id);
-        $software = $user->softwares()->create($data);
+        $software = $user->softwares()->create($data); //automatycznie zapisuje user_id
         return $software;
     }
 
     public function updateSoftwareData($data, $id)
     {
-        DB::beginTransaction();
+        DB::beginTransaction(); //nasluchiwanie
         try{
-            $software = $this->softwareRepository->update($data, $id);   
+            $software = $this->softwareRepository->update($data, $id);
         }
         catch(Exception $e)
         {

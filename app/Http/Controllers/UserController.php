@@ -20,17 +20,25 @@ class UserController extends Controller
     {
         $software = $this->userService->getMySoftware($request->all());
         $hasSoftware = $this->userService->hasSoftware($software);
- 
-        return view('Softwares.user-software', [ 
-            'softwares' => $software, 
+
+        return view('Softwares.user-software', [
+            'softwares' => $software,
             'hasSoftware' => $hasSoftware,
         ]);
     }
 
     public function show($id){
         $user = $this->userService->getUser($id);
-        $software = $user->softwares;
-        $positionInRanking = User::getYourPosition($user->id);
+        switch ($user) {
+            case null:
+                $software = 0;
+                $positionInRanking = 0;
+                break;
+            default:
+                $software = $user->softwares;
+                $positionInRanking = User::getYourPosition($user->id);
+                break;
+        }
         return view('user.show', [
             'user' => $user,
             'software' => $software,
@@ -54,7 +62,7 @@ class UserController extends Controller
         ]);
         $this->userService->updateUserProfile($data, $id);
         $user = $this->userService->getUser($id);
-        
+
         return redirect('/user/'.$user->id);
     }
 }

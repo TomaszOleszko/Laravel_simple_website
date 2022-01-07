@@ -13,7 +13,7 @@ class UserRepository extends BaseRepository{
     {
         $user = $this->model->find(auth()->user()->id);
         $mySoftware = $user->softwares;
-        
+
         return $mySoftware;
     }
     public function getMySoftwareByLicence($licence, $paginate = 10)
