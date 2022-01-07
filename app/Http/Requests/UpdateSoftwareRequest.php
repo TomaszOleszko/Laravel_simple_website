@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Software;
 
 class UpdateSoftwareRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class UpdateSoftwareRequest extends FormRequest
      */
     public function authorize()
     {
-        $software = $this->route('software');
+        $software = Software::find($this->route()->parameter('software'));
         return $software->user_id == $this->user()->id;
     }
 
