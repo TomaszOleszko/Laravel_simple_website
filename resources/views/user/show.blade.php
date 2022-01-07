@@ -8,7 +8,6 @@
 
 @section('content')
     @isset($user)
-
         <section class="vh-80">
             <div class="container py-5 h-75">
                 <div class="row d-flex justify-content-center align-items-center h-100">
@@ -65,9 +64,11 @@
                                                     @endif </p>
                                             </div>
                                         </div>
+                                        @if(Auth()->user()->id == $user->id)
                                         <div class="d-flex pt-1">
                                                 <a class="btn btn-outline-dark me-1 flex-grow-1" style="color: darkred" href="{{ route('user.edit', ['user' => $user]) }}">Edit</a>
                                         </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -76,5 +77,9 @@
                 </div>
             </div>
         </section>
+    @else
+        <div>
+            <h2 class="d-flex justify-content-center align-items-center" >You shouldn't be here</h2>
+        </div>
     @endisset
 @endsection
