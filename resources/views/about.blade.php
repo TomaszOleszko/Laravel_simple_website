@@ -14,7 +14,7 @@
 
                     <div class="card-body">
     <div class="row" style="margin: 3em;">
-        <span class="text-lg-start">
+        <div class="text-lg-start">
           <h1>What is open source software?</h1>
           <h2> Open source software is software with source code that anyone can inspect, modify, and enhance.</h2>
           <h3 class="text-left">The distribution terms of open-source software must comply with the following</h3>
@@ -26,11 +26,11 @@
                   <li>5. No Discrimination Against Persons or Groups</li>
                   <li>6. No Discrimination Against Fields of Endeavor</li>
                   <li>7. Distribution of License</li>
-                  <li>8. License Must Not Be Specific to a Product<</li>
+                  <li>8. License Must Not Be Specific to a Product</li>
                   <li>9. License Must Not Restrict Other Software</li>
                   <li>10. License Must Be Technology-Neutral</li>
               </ul>
-        </span>
+        </div>
     </div>
     <footer class="footer">
         <div class="container">

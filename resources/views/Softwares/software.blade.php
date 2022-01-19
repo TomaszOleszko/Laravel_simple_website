@@ -27,7 +27,7 @@
                                     </div>
                                 </form>
                         @endif
-                        <form role="form" action="{{route('software.index')}}" method="get">
+                        <form action="{{route('software.index')}}" method="get">
                             {{ csrf_field() }}
                             <div class="d-grid gap-2 col-6 mx-auto float-start">
                                 <button type="submit" class="btn btn-primary" >Filter</button>
@@ -53,7 +53,7 @@
                                         selected
                                     @endif>Creative Commons Zero v1.0 Universal</option>
                             </select>
-                            <label for="licence" class="mb-3 fs-3 align-self-center">Licence</label>
+                            <label for="licences" class="mb-3 fs-3 align-self-center">Licence</label>
                         </form>
                     </div>
                 </div>
@@ -91,7 +91,7 @@
                         @endif
                     </div>
                     @endfor
-                <div class="d-flex flex-wrap">
+                <div class="d-flex flex-wrap align-items-center justify-content-center">
                     {{ $softwares->links() }}
                 </div>
             </div>

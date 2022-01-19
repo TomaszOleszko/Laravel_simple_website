@@ -22,9 +22,9 @@
         <div class="card border border-info shadow-0 mb-3" style="max-width: 90%">
             <div class="card-body">
                 <h5 class="card-title">New software</h5>
-                <p class="card-text">
+
                 <div class="align-content-center">
-                    <form role="form" action="{{route('software.update', ['software' => $software->id] )}}" method="post" class="row g-3 align-items-center needs-validation w-90" novalidate>
+                    <form  action="{{route('software.update', ['software' => $software->id] )}}" method="post" class="row g-3 align-items-center needs-validation w-90" novalidate>
                         @csrf
                         @method('PUT')
                         <div class="col-md-6 mb-3 mt-3">
@@ -36,10 +36,9 @@
                             <input type="url" class="form-control" id="link" value="{{ $software->link }}" placeholder="Enter url" name="link" required>
                         </div>
                         <div class="mb-3">
-                            <label for="description">Description:</label>
+                            <label for="desc">Description:</label>
                             <textarea class="form-control" rows="5" id="desc" name="description" required>{{ $software->description }}</textarea>
                         </div>
-
                         <div class="mb-3">
                             <select class="form-select " name="licence" id="categories" aria-label="Default select example">
                                 <option value="apache2" @if ($software->licence == 'apache2') selected @endif>Apache License 2.0 (Apache-2.0)</option>
@@ -52,7 +51,6 @@
                         <button type="submit" class="btn btn-primary btn-block rounded-pill shadow-sm">Submit</button>
                     </form>
                 </div>
-                </p>
             </div>
         </div>
     </div>
