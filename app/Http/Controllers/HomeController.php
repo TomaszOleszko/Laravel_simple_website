@@ -44,6 +44,7 @@ class HomeController extends Controller
             //dd($popularUser[0]['name']);
             //$popularUser['name'] = $popularUser[0]['user_id'];
 
+
         return view('home',['user' => $user,
             'userCount' => $userCount,
             'softwareCount'=>$softwareCount,

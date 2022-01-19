@@ -26,7 +26,7 @@
                                 </div>
                             </form>
                         @endif
-                        <form role="form" action="{{route('userSoftware')}}" method="GET">
+                        <form action="{{route('userSoftware')}}" method="GET">
                             {{ csrf_field() }}
                             <div class="d-grid gap-2 col-6 mx-auto float-start">
                                 <button type="submit" class="btn btn-primary" >Filter</button>
@@ -50,7 +50,7 @@
                                         selected
                                     @endif>Creative Commons Zero v1.0 Universal</option>
                             </select>
-                            <label for="licence" class="mb-3 fs-3 align-self-center">Licence</label>
+                            <label for="licences" class="mb-3 fs-3 align-self-center">Licence</label>
                         </form>
                     </div>
                 </div>
@@ -67,13 +67,13 @@
                                 <div class="card-body">
                                     <div class="container-fluid">
                                         <div class="row text-center">
-                                            <a href="{{$softwares[$i]->link}}" class="btn btn-primary w-100 p-0 m-0">Link</a>
+                                            <a href="{{$softwares[$i]->link}}" class="btn btn-primary w-100 p-2 m-2">Link</a>
                                             @if($softwares[$i]->user_id == \Auth::user()->id)
-                                                <a href="{{route('software.edit',['software' => $softwares[$i]->id] )}}" class="btn btn-success btn-xs w-100 p-0 m-0" title="Edytuj"> Edytuj</a>
+                                                <a href="{{route('software.edit',['software' => $softwares[$i]->id] )}}" class="btn btn-success btn-xs w-100 p-2 m-2" title="Edytuj"> Edytuj</a>
                                                 <form action="{{route('software.destroy',['software' => $softwares[$i]->id] )}}" class="p-0" method="POST">
                                                     @csrf
                                                     @method('delete')
-                                                    <button class="btn btn-danger btn-xs w-100 p-0 m-0" onclick="return confirm('Jesteś pewien?')" title="Delete" type="submit">Delete</button>
+                                                    <button class="btn btn-danger btn-xs w-100 p-2 m-2 r" onclick="return confirm('Jesteś pewien?')" title="Delete" type="submit">Delete</button>
                                                 </form>
                                             @endif
                                         </div>
@@ -95,13 +95,13 @@
                                     <div class="card-body">
                                         <div class="container-fluid">
                                             <div class="row text-center">
-                                                <a href="{{$softwares[$i+1]->link}}" class="btn btn-primary w-100 p-0 m-0">Link</a>
+                                                <a href="{{$softwares[$i+1]->link}}" class="btn btn-primary w-100 p-2 m-2">Link</a>
                                                 @if($softwares[$i+1]->user_id == \Auth::user()->id)
-                                                    <a href="{{route('software.edit',['software' => $softwares[$i+1]->id] )}}" class="btn btn-success btn-xs w-100 p-0 m-0" title="Edytuj"> Edytuj</a>
+                                                    <a href="{{route('software.edit',['software' => $softwares[$i+1]->id] )}}" class="btn btn-success btn-xs w-100 p-2 m-2" title="Edytuj"> Edytuj</a>
                                                     <form action="{{route('software.destroy',['software' => $softwares[$i+1]->id] )}}" class="p-0" method="POST">
                                                         @csrf
                                                         @method('delete')
-                                                        <button class="btn btn-danger btn-xs w-100 p-0 m-0" onclick="return confirm('Jesteś pewien?')" title="Delete" type="submit">Delete</button>
+                                                        <button class="btn btn-danger btn-xs w-100 p-2 m-2" onclick="return confirm('Jesteś pewien?')" title="Delete" type="submit">Delete</button>
                                                     </form>
                                                 @endif
                                             </div>

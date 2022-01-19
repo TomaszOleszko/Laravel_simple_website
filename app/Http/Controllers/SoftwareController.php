@@ -59,7 +59,6 @@ class SoftwareController extends Controller
             'link',
             'licence',
         ]);
-
         $software = $this->softwareService->saveSoftwareData($data);
 
         return redirect('/software')->with('success', 'Software saved.');
@@ -103,6 +102,7 @@ class SoftwareController extends Controller
             'link',
             'licence',
         ]);
+
         $software = $this->softwareService->updateSoftwareData($data, $id);
         return redirect('/user-software')->with('success', 'Software updated.');
     }
